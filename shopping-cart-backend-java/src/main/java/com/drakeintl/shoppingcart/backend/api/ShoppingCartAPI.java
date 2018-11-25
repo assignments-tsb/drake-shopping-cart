@@ -1,8 +1,9 @@
 package com.drakeintl.shoppingcart.backend.api;
 
 import com.drakeintl.shoppingcart.backend.model.Item;
+import com.drakeintl.shoppingcart.backend.model.Purchase;
 import com.drakeintl.shoppingcart.backend.service.ShoppingCart;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,13 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 public class ShoppingCartAPI {
 
-    @Autowired
-    ShoppingCart shoppingCart;
+    private ShoppingCart shoppingCart;
 
     @RequestMapping(path = "shopping-cart", method = RequestMethod.GET)
     public List<Item> listAvailableItems() {
         return shoppingCart.listAvailableItems();
     }
+
+    @RequestMapping(path = "shopping-cart/purchase", method = RequestMethod.POST)
+    public List<Purchase> purchase(List<Purchase> purchases) {
+        try {
+            return shoppingCart.purchase(purchases);
+        } catch (ShoppingCart.OrderFailure orderFailure) {
+            orderFailure.printStackTrace();
+        }
+        return null;
+    }
+
+
 }
