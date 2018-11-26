@@ -1,8 +1,10 @@
 package com.drakeintl.shoppingcart.backend.repository;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
 import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 //in a real application we probably should be extending
 //something the Spring Data framework provides,
@@ -36,6 +38,18 @@ public interface BaseRepository<T,ID extends Serializable> {
      * @return all the entities of type T
      */
     List<T> findAll();
+
+    /**
+     * for convenience
+     *
+     * @param t the first element should not be null
+     * @param others optional
+     * @return the list of newly persisted entities
+     */
+    default List<T> save(T t, T... others) {
+        Preconditions.checkNotNull(t);
+        return this.save(Lists.asList(t, others));
+    }
 
     /**
      * persists the entities,
