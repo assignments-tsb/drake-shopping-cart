@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Component
 public class InMemoryItemRepository implements ItemRepository {
@@ -22,9 +25,10 @@ public class InMemoryItemRepository implements ItemRepository {
     @Override
     public List<Item> find(Iterable<Long> ids) {
         synchronized (storage) {
-            
+            return StreamSupport.stream(ids.spliterator(), false)
+                    .flatMap( (id) -> Stream.of(storage.get(id)))
+                    .collect(Collectors.toList());
         }
-        return null;
     }
 
     @Override
