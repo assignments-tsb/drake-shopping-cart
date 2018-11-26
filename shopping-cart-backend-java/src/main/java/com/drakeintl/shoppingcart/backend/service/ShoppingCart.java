@@ -35,9 +35,9 @@ public class ShoppingCart {
     //@Transactional
     //on a real implementation this should be wrapped inside a transaction
     public List<Purchase> purchase(List<Purchase> purchases) throws OrderFailure {
+        log.info("Purchasing Items: {}", purchases);
         Preconditions.checkNotNull(purchases);
 
-        log.info("Purchasing Items: {}", purchases);
         List<Long> itemIds = purchases.stream().map(Purchase::getItemId).collect(Collectors.toList());
 
         Map<Long,Item> items = itemRepository.find(itemIds).stream()
