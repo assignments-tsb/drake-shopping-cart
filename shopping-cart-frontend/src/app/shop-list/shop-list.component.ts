@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ShoppingCartService } from '../service/shopping-cart.service';
+import { Observable } from 'rxjs';
+import { Item } from '../model/item';
 
 @Component({
   selector: 'app-shop-list',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopListComponent implements OnInit {
 
-  constructor() { }
+  items: Observable<Item[]>;
+
+  constructor(private shoppingCart: ShoppingCartService) { }
 
   ngOnInit() {
+    this.loadItems();
+  }
+
+  loadItems() {
+    this.items = this.shoppingCart.listAvailableItems();
   }
 
 }

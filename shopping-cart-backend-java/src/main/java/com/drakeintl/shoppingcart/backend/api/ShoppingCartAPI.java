@@ -5,13 +5,11 @@ import com.drakeintl.shoppingcart.backend.model.Purchase;
 import com.drakeintl.shoppingcart.backend.service.ShoppingCart;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 public class ShoppingCartAPI {

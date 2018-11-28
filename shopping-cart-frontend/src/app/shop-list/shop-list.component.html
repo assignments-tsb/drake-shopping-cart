@@ -1,7 +1,6 @@
 <h2>Currently available in our shop:</h2>
 
 <ul>
-  <li>Item A: 20 Left</li>
-  <li>Item B: 10 Left</li>
+  <li *ngFor='let item of items | async'>{{item.name}}: {{item.quantity}} left</li>
 </ul>
 
