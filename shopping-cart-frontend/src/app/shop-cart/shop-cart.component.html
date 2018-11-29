@@ -1,15 +1,10 @@
 <h2>Your shopping:</h2>
 
 <div>
-  <div>
-    <span>Item A</span>
-    <input>
+  <div *ngFor="let purchase of purchases">
+    <span>{{purchase.item.name}}</span>
+    <input value="{{purchase.quantity}}">
   </div>
 
-  <div>
-    <span>Item B</span>
-    <input>
-  </div>
-
-  <button>Buy</button>
+  <button (click)="buy()">Buy</button>
 </div>

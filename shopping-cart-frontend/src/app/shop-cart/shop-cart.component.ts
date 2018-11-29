@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Purchase } from '../model/purchase';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ShoppingCartService } from '../service/shopping-cart.service';
+import { Item } from '../model/item';
 
 @Component({
   selector: 'app-shop-cart',
@@ -7,9 +12,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopCartComponent implements OnInit {
 
-  constructor() { }
+  purchases: Purchase[] = [];
+
+  constructor(private shoppingCart: ShoppingCartService) { }
 
   ngOnInit() {
+    this.loadItems();
+  }
+
+  async loadItems() {
+    let purchases: Purchase[] = await (this.shoppingCart.listAvailableItems().pipe(
+      map((items) => Purchase.fromList(items))
+    ).toPromise());
+
+    this.purchases = purchases;
+  }
+
+  async buy() {
+    console.log('buy!');
+    let purchases = await this.shoppingCart.purchase(this.purchases).toPromise();
+    console.log('Purchased: ' + purchases);
   }
 
 }

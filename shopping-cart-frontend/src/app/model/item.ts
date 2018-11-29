@@ -4,7 +4,7 @@
  */
 export class Item {
 
-    id: number;
+    id: number = null;
     name: string;
     quantity: number;
 }
